@@ -1,4 +1,4 @@
-Copyright (c) 2013 Tucson Embedded Systems
+Copyright (c) 2014 Charlies King
 
 Based on brew maven plugin, Copyright (c) 2002-2011 Jacob Hansson <jacob@voltvoodoo.com>
 
