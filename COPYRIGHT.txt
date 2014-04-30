@@ -1,0 +1,4 @@
+requirejs optimizer maven plugin
+Copyright (c) 2014 Charles King 
+
+This software is open source. For details, see LICENSE.txt and NOTICE.txt.
