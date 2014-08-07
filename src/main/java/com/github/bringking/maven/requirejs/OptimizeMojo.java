@@ -3,6 +3,7 @@ package com.github.bringking.maven.requirejs;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.maven.execution.MavenSession;
@@ -58,12 +59,12 @@ public class OptimizeMojo extends AbstractMojo {
     private File optimizerFile;
 
     /**
-     * Path to optimizer json config.
+     * Paths to optimizer json config.
      *
      * @parameter
      * @required
      */
-    private File configFile;
+    private List<File> configFiles;
 
     /**
      * Whether or not the config file should
@@ -127,20 +128,19 @@ public class OptimizeMojo extends AbstractMojo {
             Optimizer builder = new Optimizer();
             ErrorReporter reporter = new MojoErrorReporter(getLog(), true);
 
-            if (optimizerFile != null) {
+            List<File> buildProfiles = createBuildProfile();
+            for (File buildProfile : buildProfiles) {
+                if (optimizerFile != null) {
+                    if (this.optimizerParameters != null) {
+                        builder.optimize(buildProfile, optimizerFile, reporter, runner, this.optimizerParameters);
+                    } else builder.optimize(buildProfile, optimizerFile, reporter, runner);
 
+                } else {
 
-                if (this.optimizerParameters != null) {
-                    builder.optimize(createBuildProfile(), optimizerFile, reporter, runner, this.optimizerParameters);
-                } else builder.optimize(createBuildProfile(), optimizerFile, reporter, runner);
-
-            } else {
-
-                if (this.optimizerParameters != null) {
-                    builder.optimize(createBuildProfile(), reporter, runner, this.optimizerParameters);
-                } else builder.optimize(createBuildProfile(), reporter, runner);
-
-
+                    if (this.optimizerParameters != null) {
+                        builder.optimize(buildProfile, reporter, runner, this.optimizerParameters);
+                    } else builder.optimize(buildProfile, reporter, runner);
+                }
             }
         } catch (IOException e) {
             throw new MojoExecutionException("Failed to read r.js", e);
@@ -169,27 +169,29 @@ public class OptimizeMojo extends AbstractMojo {
     }
 
     @SuppressWarnings("rawtypes")
-    private File createBuildProfile() throws MojoExecutionException {
+    private List<File> createBuildProfile() throws MojoExecutionException {
         if (filterConfig) {
-            File filteredConfig;
-
-            try {
-                File profileDir = new File(buildDirectory, "requirejs-config/");
-                profileDir.mkdirs();
-                filteredConfig = new File(profileDir, "filtered-build.js");
-                if (!filteredConfig.exists()) {
-                    filteredConfig.createNewFile();
+            List<File> filteredConfig = new ArrayList<File>();
+            for (File configFile : configFiles) {
+                try {
+                    File profileDir = new File(buildDirectory, "requirejs-config/");
+                    profileDir.mkdirs();
+                    File currentFilteredConfig = new File(profileDir, "filtered-build.js");
+                    if (!currentFilteredConfig.exists()) {
+                        currentFilteredConfig.createNewFile();
+                    }
+                    //TODO hardcoded encoding
+                    mavenFileFilter.copyFile(configFile, currentFilteredConfig, true, project, new ArrayList(), true, "UTF8", session);
+                    filteredConfig.add(currentFilteredConfig);
+                } catch (IOException e) {
+                    throw new MojoExecutionException("Error creating filtered build file.", e);
+                } catch (MavenFilteringException e) {
+                    throw new MojoExecutionException("Error filtering config file.", e);
                 }
-                mavenFileFilter.copyFile(configFile, filteredConfig, true, project, new ArrayList(), true, "UTF8", session);
-            } catch (IOException e) {
-                throw new MojoExecutionException("Error creating filtered build file.", e);
-            } catch (MavenFilteringException e) {
-                throw new MojoExecutionException("Error filtering config file.", e);
             }
-
             return filteredConfig;
         } else {
-            return configFile;
+            return configFiles;
         }
     }
 
