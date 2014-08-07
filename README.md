@@ -52,10 +52,12 @@ Just add the plugin to your pom:
             <nodeExecutable>
                 /opt/nodejs/node
             </nodeExecutable>
-            <!-- path to optimizer json config file -->
-            <configFile>
-                ${basedir}/src/main/config/buildconfig.js
-            </configFile>
+            <!-- path to optimizer json config file(s) -->
+            <configFiles>
+                <configFile>
+                    ${basedir}/src/main/config/buildconfig.js
+                </configFile>
+            </configFiles>
             <!-- optional path to optimizer executable -->
             <optimizerFile>
                 ${basedir}/src/main/scripts/r.js
