@@ -10,7 +10,7 @@
 	<groupId>com.selessia</groupId>
 	<artifactId>requirejs-maven-plugin</artifactId>
 	<name>RequireJS Maven Plugin</name>
-	<version>2.0.5-SNAPSHOT</version>
+	<version>2.0.6-SNAPSHOT</version>
 	<packaging>maven-plugin</packaging>
 
 	<url>https://github.com/stnor/requirejs-maven-plugin</url>
@@ -19,7 +19,7 @@
         Maven plugin for RequireJS optimization
 	</description>
 
-	<scm>
+    <scm>
         <connection>scm:git:git://github.com/stnor/requirejs-maven-plugin.git</connection>
         <developerConnection>scm:git:git@github.com:stnor/requirejs-maven-plugin.git</developerConnection>
         <url>git://github.com/stnor/requirejs-maven-plugin.git</url>
