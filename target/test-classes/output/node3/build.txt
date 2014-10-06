@@ -1,7 +1,0 @@
-
-js/main.js
-----------------
-js/jquery.js
-js/jquery.alpha.js
-js/jquery.beta.js
-js/main.js
