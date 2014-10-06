@@ -1,17 +1,17 @@
 package com.github.bringking.maven.requirejs;
 
 public class ExitStatus {
-  private int exitCode;
+    private int exitCode;
 
-public int getExitCode() {
-  return exitCode;
-}
+    public int getExitCode() {
+        return exitCode;
+    }
 
-public void setExitCode(int exitCode) {
-  this.exitCode = exitCode;
-}
+    public void setExitCode( int exitCode ) {
+        this.exitCode = exitCode;
+    }
 
-public boolean success() {
-  return (this.exitCode == 0);
-}
+    public boolean success() {
+        return (this.exitCode == 0);
+    }
 }

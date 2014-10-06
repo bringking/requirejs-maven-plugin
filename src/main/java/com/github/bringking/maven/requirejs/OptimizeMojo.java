@@ -80,7 +80,7 @@ public class OptimizeMojo extends AbstractMojo {
     /**
      * If the 'deps' parameter in the config file should be generated
      * automatically from the contents of this folder
-     * 
+     *
      * @parameter
      * @required
      */
@@ -120,8 +120,8 @@ public class OptimizeMojo extends AbstractMojo {
      * @throws MojoExecutionException if there is a problem optimizing files.
      */
     public void execute() throws MojoExecutionException {
-        if (skip) {
-            getLog().info("Optimization is skipped.");
+        if ( skip ) {
+            getLog().info( "Optimization is skipped." );
             return;
         }
 
@@ -129,94 +129,97 @@ public class OptimizeMojo extends AbstractMojo {
         Runner runner;
         String nodeCommand = getNodeCommand();
 
-        System.out.println("Node command" + nodeCommand);
-        
-        if (nodeCommand != null) {
-            getLog().info("Running with Node @ " + nodeCommand);
-            runner = new NodeJsRunner(nodeCommand);
+        System.out.println( "Node command" + nodeCommand );
+
+        if ( nodeCommand != null ) {
+            getLog().info( "Running with Node @ " + nodeCommand );
+            runner = new NodeJsRunner( nodeCommand );
         } else {
-            getLog().info("Node not detected. Falling back to rhino");
+            getLog().info( "Node not detected. Falling back to rhino" );
             runner = new RhinoRunner();
         }
 
         try {
             Optimizer builder = new Optimizer();
-            ErrorReporter reporter = new MojoErrorReporter(getLog(), true);
+            ErrorReporter reporter = new MojoErrorReporter( getLog(), true );
 
             List<File> buildProfiles = createBuildProfile();
-            for (File buildProfile : buildProfiles) {
-                if (optimizerFile != null) {
-                    if (this.optimizerParameters != null) {
-                        builder.optimize(buildProfile, optimizerFile, reporter, runner, this.optimizerParameters);
-                    } else builder.optimize(buildProfile, optimizerFile, reporter, runner);
+            for ( File buildProfile : buildProfiles ) {
+                if ( optimizerFile != null ) {
+                    if ( this.optimizerParameters != null ) {
+                        builder.optimize( buildProfile, optimizerFile, reporter, runner, this.optimizerParameters );
+                    } else builder.optimize( buildProfile, optimizerFile, reporter, runner );
 
                 } else {
 
-                    if (this.optimizerParameters != null) {
-                        builder.optimize(buildProfile, reporter, runner, this.optimizerParameters);
-                    } else builder.optimize(buildProfile, reporter, runner);
+                    if ( this.optimizerParameters != null ) {
+                        builder.optimize( buildProfile, reporter, runner, this.optimizerParameters );
+                    } else builder.optimize( buildProfile, reporter, runner );
                 }
             }
-        } catch (IOException e) {
-            throw new MojoExecutionException("Failed to read r.js", e);
-        } catch (EvaluatorException e) {
-            throw new MojoExecutionException("Failed to execute r.js", e);
-        } catch (OptimizationException e) {
-            throw new MojoExecutionException("r.js exited with an error.",e);
+        } catch ( IOException e ) {
+            throw new MojoExecutionException( "Failed to read r.js", e );
+        } catch ( EvaluatorException e ) {
+            throw new MojoExecutionException( "Failed to execute r.js", e );
+        } catch ( OptimizationException e ) {
+            throw new MojoExecutionException( "r.js exited with an error.", e );
         }
     }
+
     /**
      * Returns the node command if node is available and it is the runner which should be used.
-     * 
+     *
      * @return the command or <code>null</code>
      */
     private String getNodeCommand() {
-        if ("nodejs".equalsIgnoreCase(runner)) {
+        if ( "nodejs".equalsIgnoreCase( runner ) ) {
             return getNodeJsPath();
         }
-        
+
         return null;
     }
 
-	@SuppressWarnings("rawtypes")
+    @SuppressWarnings("rawtypes")
     public Map getPluginContext() {
         return super.getPluginContext();
     }
 
     @SuppressWarnings("rawtypes")
     private List<File> createBuildProfile() throws MojoExecutionException {
-        if (filterConfig) {
+        if ( filterConfig ) {
             String scannedDepList = null;
-            if (fillDepsFromFolder != null) {
-                scannedDepList = scanChildren(fillDepsFromFolder.toURI(), fillDepsFromFolder);
+            if ( fillDepsFromFolder != null ) {
+                scannedDepList = scanChildren( fillDepsFromFolder.toURI(), fillDepsFromFolder );
             }
             List<File> filteredConfig = new ArrayList<File>();
-            for (File configFile : configFiles) {
+            for ( File configFile : configFiles ) {
                 try {
-                    File profileDir = new File(buildDirectory, "requirejs-config/");
+                    File profileDir = new File( buildDirectory, "requirejs-config/" );
                     profileDir.mkdirs();
-                    File currentFilteredConfig = new File(profileDir, "filtered-build.js");
-                    if (!currentFilteredConfig.exists()) {
+                    File currentFilteredConfig = new File( profileDir, "filtered-build.js" );
+                    if ( !currentFilteredConfig.exists() ) {
                         currentFilteredConfig.createNewFile();
                     }
                     //TODO hardcoded encoding
-                    mavenFileFilter.copyFile(configFile, currentFilteredConfig, true, project, new ArrayList(), true, "UTF8", session);
-                    if (scannedDepList != null) {
+                    mavenFileFilter.copyFile( configFile, currentFilteredConfig, true, project, new ArrayList(), true, "UTF8", session );
+
+                    if ( scannedDepList != null ) {
                         RandomAccessFile raf = new RandomAccessFile(
-                                currentFilteredConfig, "rw");
+                                currentFilteredConfig, "rw" );
                         byte[] buffer = new byte[(int) raf.length()];
-                        raf.readFully(buffer);
-                        buffer = new String(buffer).replace("${scanFolder}",
-                                scannedDepList).getBytes();
-                        raf.seek(0);
-                        raf.write(buffer);
+                        raf.readFully( buffer );
+                        buffer = new String( buffer ).replace( "${scanFolder}",
+                                scannedDepList ).getBytes();
+                        raf.seek( 0 );
+                        raf.write( buffer );
                         raf.close();
                     }
-                    filteredConfig.add(currentFilteredConfig);
-                } catch (IOException e) {
-                    throw new MojoExecutionException("Error creating filtered build file.", e);
-                } catch (MavenFilteringException e) {
-                    throw new MojoExecutionException("Error filtering config file.", e);
+
+                    filteredConfig.add( currentFilteredConfig );
+                } catch ( IOException e ) {
+                    throw new MojoExecutionException( "Error creating filtered build file.", e );
+                } catch ( MavenFilteringException e ) {
+                    throw new MojoExecutionException( "Error filtering config file.", e );
                 }
             }
             return filteredConfig;
@@ -225,28 +228,28 @@ public class OptimizeMojo extends AbstractMojo {
         }
     }
 
-    private String scanChildren(URI referenceURI, File currentFolder) {
-        File[] files = currentFolder.listFiles(new FileFilter() {
+    private String scanChildren( URI referenceURI, File currentFolder ) {
+        File[] files = currentFolder.listFiles( new FileFilter() {
             @Override
-            public boolean accept(File file) {
-                return file.getName().endsWith(".js") || file.isDirectory();
+            public boolean accept( File file ) {
+                return file.getName().endsWith( ".js" ) || file.isDirectory();
             }
-        });
+        } );
 
         StringBuilder ret = new StringBuilder();
         String separator = "";
-        if (files != null) {
-            for (File file : files) {
-                if (file.isDirectory()) {
-                    ret.append(separator).append(
-                            scanChildren(referenceURI, file));
+        if ( files != null ) {
+            for ( File file : files ) {
+                if ( file.isDirectory() ) {
+                    ret.append( separator ).append(
+                            scanChildren( referenceURI, file ) );
                 } else {
-                    String relativePath = referenceURI.relativize(file.toURI())
+                    String relativePath = referenceURI.relativize( file.toURI() )
                             .getPath();
                     String relativePathWithoutExtension = relativePath
-                            .substring(0, relativePath.lastIndexOf('.'));
-                    ret.append(separator).append("\"")
-                            .append(relativePathWithoutExtension).append("\"");
+                            .substring( 0, relativePath.lastIndexOf( '.' ) );
+                    ret.append( separator ).append( "\"" )
+                            .append( relativePathWithoutExtension ).append( "\"" );
                 }
                 separator = ",";
             }
@@ -256,7 +259,7 @@ public class OptimizeMojo extends AbstractMojo {
     }
 
     private String getNodeJsPath() {
-        if (nodeExecutable != null) {
+        if ( nodeExecutable != null ) {
             return nodeExecutable;
         } else {
             return NodeJsRunner.detectNodeCommand();

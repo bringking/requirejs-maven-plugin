@@ -15,14 +15,14 @@ public class LoggerErrorReporter implements ErrorReporter {
     private int errorCount;
     private Logger log;
 
-    public LoggerErrorReporter(Logger log, boolean acceptWarnings) {
+    public LoggerErrorReporter( Logger log, boolean acceptWarnings ) {
         this.log = log;
         this.acceptWarn = acceptWarnings;
     }
 
 
-    public void setDefaultFileName(String v) {
-        if (v.length() == 0) {
+    public void setDefaultFileName( String v ) {
+        if ( v.length() == 0 ) {
             v = null;
         }
         defaultFilename = v;
@@ -36,46 +36,46 @@ public class LoggerErrorReporter implements ErrorReporter {
         return warningCount;
     }
 
-    private String newMessage(String message, String sourceName, int line, String lineSource, int lineOffset) {
+    private String newMessage( String message, String sourceName, int line, String lineSource, int lineOffset ) {
         StringBuilder back = new StringBuilder();
-        if ((sourceName == null) || (sourceName.length() == 0)) {
+        if ( (sourceName == null) || (sourceName.length() == 0) ) {
             sourceName = defaultFilename;
         }
-        if (sourceName != null) {
-            back.append(sourceName)
-                    .append(":line ")
-                    .append(line)
-                    .append(":column ")
-                    .append(lineOffset)
-                    .append(':');
+        if ( sourceName != null ) {
+            back.append( sourceName )
+                    .append( ":line " )
+                    .append( line )
+                    .append( ":column " )
+                    .append( lineOffset )
+                    .append( ':' );
         }
-        if ((message != null) && (message.length() != 0)) {
-            back.append(message);
+        if ( (message != null) && (message.length() != 0) ) {
+            back.append( message );
         } else {
-            back.append("unknown error");
+            back.append( "unknown error" );
         }
-        if ((lineSource != null) && (lineSource.length() != 0)) {
-            back.append("\n\t")
-                    .append(lineSource);
+        if ( (lineSource != null) && (lineSource.length() != 0) ) {
+            back.append( "\n\t" )
+                    .append( lineSource );
         }
         return back.toString();
     }
 
-    public void error(String message, String sourceName, int line, String lineSource, int lineOffset) {
-        String fullMessage = newMessage(message, sourceName, line, lineSource, lineOffset);
-        log.severe(fullMessage);
+    public void error( String message, String sourceName, int line, String lineSource, int lineOffset ) {
+        String fullMessage = newMessage( message, sourceName, line, lineSource, lineOffset );
+        log.severe( fullMessage );
         errorCount++;
     }
 
-    public EvaluatorException runtimeError(String message, String sourceName, int line, String lineSource, int lineOffset) {
-        error(message, sourceName, line, lineSource, lineOffset);
-        throw new EvaluatorException(message, sourceName, line, lineSource, lineOffset);
+    public EvaluatorException runtimeError( String message, String sourceName, int line, String lineSource, int lineOffset ) {
+        error( message, sourceName, line, lineSource, lineOffset );
+        throw new EvaluatorException( message, sourceName, line, lineSource, lineOffset );
     }
 
-    public void warning(String message, String sourceName, int line, String lineSource, int lineOffset) {
-        if (acceptWarn) {
-            String fullMessage = newMessage(message, sourceName, line, lineSource, lineOffset);
-            log.warning(fullMessage);
+    public void warning( String message, String sourceName, int line, String lineSource, int lineOffset ) {
+        if ( acceptWarn ) {
+            String fullMessage = newMessage( message, sourceName, line, lineSource, lineOffset );
+            log.warning( fullMessage );
             warningCount++;
         }
     }
