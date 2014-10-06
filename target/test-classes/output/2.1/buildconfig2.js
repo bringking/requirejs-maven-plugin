@@ -1,0 +1,1 @@
+({appDir:"./",baseUrl:"./js",dir:"../output/2.1",optimize:"uglify",paths:{jquery:"lib/jquery-1.7.2",json:"lib/json2",underscore:"lib/underscore-1.3.3",backbone:"lib/backbone-0.9.2",dust:"lib/dust-core-1.1.0",bootstrap:"lib/bootstrap",base:"core/base"},removeCombined:!0,fileExclusionRegExp:"/^./",modules:[{name:"main"}]});

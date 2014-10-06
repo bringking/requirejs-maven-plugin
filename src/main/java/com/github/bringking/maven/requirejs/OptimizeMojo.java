@@ -125,8 +125,11 @@ public class OptimizeMojo extends AbstractMojo {
             return;
         }
 
+
         Runner runner;
         String nodeCommand = getNodeCommand();
+
+        System.out.println("Node command" + nodeCommand);
         
         if (nodeCommand != null) {
             getLog().info("Running with Node @ " + nodeCommand);
@@ -159,7 +162,7 @@ public class OptimizeMojo extends AbstractMojo {
         } catch (EvaluatorException e) {
             throw new MojoExecutionException("Failed to execute r.js", e);
         } catch (OptimizationException e) {
-            throw new MojoExecutionException("r.js exited with an error.");
+            throw new MojoExecutionException("r.js exited with an error.",e);
         }
     }
     /**
@@ -259,4 +262,6 @@ public class OptimizeMojo extends AbstractMojo {
             return NodeJsRunner.detectNodeCommand();
         }
     }
+
+
 }

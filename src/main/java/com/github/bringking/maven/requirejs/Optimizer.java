@@ -71,6 +71,7 @@ public class Optimizer {
         args[0] = "-o";
         args[1] = buildProfile.getAbsolutePath();
 
+
         ExitStatus status = runner.exec(optimizerFile, args, reporter);
         if (!status.success()) {
             throw new OptimizationException("Optimizer returned non-zero exit status.");

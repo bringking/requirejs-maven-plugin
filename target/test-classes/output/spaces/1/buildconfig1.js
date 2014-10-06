@@ -1,0 +1,1 @@
+({appDir:"./",baseUrl:"./js",dir:"../output/spaces/1",optimize:"uglify",paths:{},removeCombined:!0,fileExclusionRegExp:"/^./",modules:[{name:"main"}]});

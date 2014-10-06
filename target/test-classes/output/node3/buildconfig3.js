@@ -1,0 +1,1 @@
+({appDir:"./",baseUrl:"./js",dir:"../output/3",paths:{},removeCombined:!0,fileExclusionRegExp:"/^./",modules:[{name:"main"}]});

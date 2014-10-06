@@ -82,6 +82,27 @@ public class OptimizerTest {
     }
 
     @Test
+    public void testWithSpaceRhino() throws Exception {
+        long start = System.currentTimeMillis();
+        optimizer.optimize(loadProfile("testcase space/buildconfig1.js"), reporter, runner);
+        long end = System.currentTimeMillis();
+
+        log.debug("total time ::" + (end - start) + "msec");
+    }
+
+
+    @Test
+    public void testWithSpaceNode() throws Exception {
+        String nodeCmd = NodeJsRunner.detectNodeCommand();
+        assumeTrue(nodeCmd != null); //skip if no node command detected.
+        long start = System.currentTimeMillis();
+        optimizer.optimize(loadProfile("testcase space/buildConfig1.js"), reporter, new NodeJsRunner(nodeCmd));
+        long end = System.currentTimeMillis();
+
+        log.debug("total time ::" + (end - start) + "msec");
+    }
+
+    @Test
     public void testBuildWithParameters() throws Exception {
         String[] args = {"optimize=uglify"};
         long start = System.currentTimeMillis();

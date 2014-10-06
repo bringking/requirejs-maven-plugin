@@ -1,0 +1,1 @@
+({appDir:"./",baseUrl:"./js",dir:"../output/2.2",optimize:"uglify",removeCombined:!0,fileExclusionRegExp:"/^./",name:"main",mainConfigFile:"./js/mainConfig.js"});
