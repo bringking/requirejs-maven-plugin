@@ -91,16 +91,28 @@ public class OptimizerTest {
 //    }
 //
 //
-//    @Test
-//    public void testWithSpaceNode() throws Exception {
-//        String nodeCmd = NodeJsRunner.detectNodeCommand();
-//        assumeTrue( nodeCmd != null ); //skip if no node command detected.
-//        long start = System.currentTimeMillis();
-//        optimizer.optimize( loadProfile( "testcase space/buildConfig1.js" ), reporter, new NodeJsRunner( nodeCmd ) );
-//        long end = System.currentTimeMillis();
-//
-//        log.debug( "total time ::" + (end - start) + "msec" );
-//    }
+    @Test
+    public void testWithSpaceNode() throws Exception {
+        String nodeCmd = NodeJsRunner.detectNodeCommand();
+        assumeTrue( nodeCmd != null ); //skip if no node command detected.
+        long start = System.currentTimeMillis();
+        optimizer.optimize( loadProfile( "testcase space/buildConfig1.js" ), reporter, new NodeJsRunner( nodeCmd ) );
+        long end = System.currentTimeMillis();
+
+        log.debug( "total time ::" + (end - start) + "msec" );
+    }
+
+    @Test
+    public void testWithNodeAndSpaceExternalRequire() throws Exception {
+        String nodeCmd = NodeJsRunner.detectNodeCommand();
+        assumeTrue( nodeCmd != null ); //skip if no node command detected.
+        long start = System.currentTimeMillis();
+        File externalRequire = loadProfile("external space/r.js");
+        optimizer.optimize( loadProfile( "testcase space/buildConfig1.js" ), externalRequire, reporter, new NodeJsRunner( nodeCmd ) );
+        long end = System.currentTimeMillis();
+
+        log.debug( "total time ::" + (end - start) + "msec" );
+    }
 //
 //    @Test
 //    public void testBuildWithParameters() throws Exception {
@@ -112,17 +124,17 @@ public class OptimizerTest {
 //        log.debug( "total time ::" + (end - start) + "msec" );
 //    }
 //
-//    @Test
-//    public void testNodeBuildWithParameters() throws Exception {
-//        String[] args = { "optimize=uglify" };
-//        String nodeCmd = NodeJsRunner.detectNodeCommand();
-//        assumeTrue( nodeCmd != null ); //skip if no node command detected.
-//        long start = System.currentTimeMillis();
-//        optimizer.optimize( loadProfile( "testcase3/buildconfigNode3.js" ), reporter, new NodeJsRunner( nodeCmd ), args );
-//        long end = System.currentTimeMillis();
-//
-//        log.debug( "total time ::" + (end - start) + "msec" );
-//    }
+    @Test
+    public void testNodeBuildWithParameters() throws Exception {
+        String[] args = { "optimize=uglify" };
+        String nodeCmd = NodeJsRunner.detectNodeCommand();
+        assumeTrue( nodeCmd != null ); //skip if no node command detected.
+        long start = System.currentTimeMillis();
+        optimizer.optimize( loadProfile( "testcase3/buildconfigNode3.js" ), reporter, new NodeJsRunner( nodeCmd ), args );
+        long end = System.currentTimeMillis();
+
+        log.debug( "total time ::" + (end - start) + "msec" );
+    }
 
     private File loadProfile( String filename ) throws URISyntaxException {
         URI uri = getClass().getClassLoader().getResource( filename ).toURI();

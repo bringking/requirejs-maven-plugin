@@ -51,8 +51,8 @@ public class NodeJsRunner implements Runner {
     }
 
     private boolean executeScript( String nodeJsFile, String scriptName, String[] params ) throws IOException {
-        CommandLine cmdLine = CommandLine.parse( nodeJsFile );
-        cmdLine.addArgument( scriptName );
+        CommandLine cmdLine = new CommandLine(nodeJsFile);
+        cmdLine.addArgument( scriptName, false );
         cmdLine.addArguments( params, false );
         DefaultExecutor executor = new DefaultExecutor();
         try {
