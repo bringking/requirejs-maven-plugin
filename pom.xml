@@ -7,22 +7,22 @@
         <version>7</version>
     </parent>
 
-	<groupId>com.github.bringking</groupId>
+	<groupId>com.selessia</groupId>
 	<artifactId>requirejs-maven-plugin</artifactId>
 	<name>RequireJS Maven Plugin</name>
-	<version>2.0.5-SNAPSHOT</version>
+	<version>2.0.6-SNAPSHOT</version>
 	<packaging>maven-plugin</packaging>
 
-	<url>https://github.com/bringking/requirejs-maven-plugin</url>
+	<url>https://github.com/stnor/requirejs-maven-plugin</url>
 
 	<description>
         Maven plugin for RequireJS optimization
 	</description>
 
-	<scm>
-        <connection>scm:git:git://github.com/bringking/requirejs-maven-plugin.git</connection>
-        <developerConnection>scm:git:git@github.com:bringking/requirejs-maven-plugin.git</developerConnection>
-        <url>git://github.com/bringking/requirejs-maven-plugin.git</url>
+    <scm>
+        <connection>scm:git:git://github.com/stnor/requirejs-maven-plugin.git</connection>
+        <developerConnection>scm:git:git@github.com:stnor/requirejs-maven-plugin.git</developerConnection>
+        <url>git://github.com/stnor/requirejs-maven-plugin.git</url>
 	</scm>
 
 	<licenses>
@@ -38,6 +38,11 @@
             <id>charles</id>
             <name>Charles King</name>
             <email>charlesk@tucsonembedded.com</email>
+        </developer>
+        <developer>
+            <id>stnor</id>
+            <name>Stefan Norberg</name>
+            <email>stefan@selessia.com</email>
         </developer>
     </developers>
 
