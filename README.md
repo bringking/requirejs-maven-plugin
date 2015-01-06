@@ -16,8 +16,8 @@ optimization process as documented at http://requirejs.org/docs/optimization.htm
 
 Node.js is the fastest way to run the r.js optimizer. The plugin will try to detect if node is
 available and will use it if it is. You can also specify a path to the node executable if it's
-not in the path. If node cannot be found, the plugin falls back to the much slower rhino js
-runtime.
+not in the path. If node cannot be found, the plugin falls back to the much slower rhino (or nashorn
+ with java 8) nashorn js runtime.
 
 **forward/backward/sideways compatible**
 
@@ -113,7 +113,7 @@ you to make your build config file more generic and pass in maven project proper
 
 **runner**
 
-Specifies which Javascript engine is used to execute the r.js optimizer. Can be either *rhino* or *nodejs*, defaults to *nodejs*.
+Specifies which Javascript engine is used to execute the r.js optimizer. Can be either *rhino*, *nashorn* or *nodejs*, defaults to *nodejs*.
 When using *nodejs*, the plugin will try and detect the node executable. To customize the node executable's location, supply a path
 to the executable using nodeJsFile
 
