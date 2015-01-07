@@ -7,7 +7,7 @@
         <version>7</version>
     </parent>
 
-	<groupId>com.selessia</groupId>
+	<groupId>com.github.bringking</groupId>
 	<artifactId>requirejs-maven-plugin</artifactId>
 	<name>RequireJS Maven Plugin</name>
 	<version>2.0.6-SNAPSHOT</version>
