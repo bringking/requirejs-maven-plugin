@@ -78,6 +78,8 @@ public class ScriptEngineRunner implements Runner {
             compileReadFully.eval();
             compileMainScript.eval();
 
+            status.setExitCode(0);
+
         } catch (Exception e) {
             throw new ScriptEngineRunnerException(e.getMessage(), e);
         }
