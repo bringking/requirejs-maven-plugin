@@ -1,3 +1,9 @@
+## Fork Notice
+
+The requirejs-maven-plugin is being maintained on another fork. Please refer to
+https://github.com/ChuanyuWang/requirejs-maven-plugin
+for up to date releases and bug fixes.
+
 # RequireJS maven plugin
 
 Builds javascript applications using the Asynchronous Module Definition (AMD)
@@ -146,7 +152,4 @@ prefix those potions.
 If skip is set to true, optimization will be skipped. This may be useful for reducing build time if optimization is not needed.
 It can also be set via the command line with ```-Drequirejs.optimize.skip=true```.
 
-## Thanks
 
-requirejs-maven-plugin is a fork from the great work done by [mcheely](https://github.com/mcheely/requirejs-maven-plugin).
-However, as I still needed this project, I started building on it.
